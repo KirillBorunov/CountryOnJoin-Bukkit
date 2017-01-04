@@ -1,0 +1,18 @@
+name: CountryOnJoin
+main: sososlik.countryonjoin.Plugin
+version: 1.0.0
+author: "Sososlik (sososlik@outlook.com)"
+description: "Mentions the country from wich the player joins the game."
+website: https://www.spigotmc.org/resources/
+commands:
+  countryonjoin:
+    description: Base command for the plugin commands.
+    usage: /countryonjoin <sub-command>
+permissions:
+  countryonjoin.hide:
+    description: Hide the country for the player.
+    default: false
+  countryonjoin.command.*:
+    description: Gives access to all the sub-commands.
+    children:
+      countryonjoin.command.reload: true
