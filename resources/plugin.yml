@@ -3,7 +3,7 @@ main: sososlik.countryonjoin.Plugin
 version: 1.0.0
 author: "Sososlik (sososlik@outlook.com)"
 description: "Mentions the country from wich the player joins the game."
-website: https://www.spigotmc.org/resources/
+website: https://www.spigotmc.org/resources/country-on-join-bukkit-edition.34275/
 commands:
   countryonjoin:
     description: Base command for the plugin commands.
