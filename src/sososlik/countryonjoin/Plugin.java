@@ -59,14 +59,14 @@ public class Plugin extends JavaPlugin
 			{
 				this.getLogger().severe("Error creating the plugin data directory \"" + dataDir.getAbsolutePath() + "\".");
 				e.printStackTrace();
+				this.setEnabled(false);
+				return;
 			}
 		}
 		
 		
-		//TODO: implement config file VERSIONS for future changes
-		
 		File configFile = new File(dataDir, CONFIG_FILENAME);
-				
+
 		if(!configFile.exists())
 		{
 			try(InputStream rs = this.getResourceAsStream(CONFIG_FILENAME))
@@ -76,13 +76,12 @@ public class Plugin extends JavaPlugin
 			{
 				this.getLogger().severe("Error extracting the file \"" + CONFIG_FILENAME +"\" to \"" + configFile.getAbsolutePath() + "\".");
 				e.printStackTrace();
+				this.setEnabled(false);
+				return;
 			}
 		}
 		
-		
-		//TODO: implement VERSIONS for the messages and countrynames files and update then if in the resource is newer
-		//TODO: maybe check for "CUSTOM" version for not overwriting the users changes
-		
+
 		File messagesBaseDir = new File(dataDir, MESSAGES_BASEDIR);
 		
 		if(!messagesBaseDir.exists())
@@ -95,6 +94,8 @@ public class Plugin extends JavaPlugin
 			{
 				this.getLogger().severe("Error creating " + messagesBaseDir.getAbsolutePath() + " directory.");
 				e.printStackTrace();
+				this.setEnabled(false);
+				return;
 			}
 		}
 		
@@ -122,7 +123,7 @@ public class Plugin extends JavaPlugin
 	        		catch (Exception e)
 	        		{
 	        			this.getLogger().severe("Error extracting the file \"" + MESSAGES_BASEDIR + "/" + f.getName() + "\" to \"" + f.getAbsolutePath() + "\".");
-	    				e.printStackTrace();
+	    				throw e;
 	        		}
 	        	}
 	        }
@@ -131,6 +132,8 @@ public class Plugin extends JavaPlugin
 		{
 			this.getLogger().severe("Error extracting the directory \"" + MESSAGES_BASEDIR + "\" to \"" + messagesBaseDir.getAbsolutePath() + "\".");
 			e.printStackTrace();
+			this.setEnabled(false);
+			return;
 		}
 		
 		
@@ -146,6 +149,8 @@ public class Plugin extends JavaPlugin
 			{
 				this.getLogger().severe("Error creating " + countrynamesBaseDir.getAbsolutePath() + " directory.");
 				e.printStackTrace();
+				this.setEnabled(false);
+				return;
 			}
 		}
 		
@@ -173,7 +178,7 @@ public class Plugin extends JavaPlugin
 	        		catch (Exception e)
 	        		{
 	        			this.getLogger().severe("Error extracting the file \"" + COUNTRYNAMES_BASEDIR + "/" + f.getName() + "\" to \"" + f.getAbsolutePath() + "\".");
-	    				e.printStackTrace();
+	    				throw e;
 	        		}
 	        	}
 	        }
@@ -182,6 +187,8 @@ public class Plugin extends JavaPlugin
 		{
 			this.getLogger().severe("Error extracting the directory \"" + COUNTRYNAMES_BASEDIR + "\" to \"" + countrynamesBaseDir.getAbsolutePath() + "\".");
 			e.printStackTrace();
+			this.setEnabled(false);
+			return;
 		}
 		
 		
@@ -197,10 +204,10 @@ public class Plugin extends JavaPlugin
 			{
 				this.getLogger().severe("Error extracting the file \"" + GEOIP_DB_FILENAME + "\" to \"" + geoipdbFile.getAbsolutePath() + "\".");
 				e.printStackTrace();
+				this.setEnabled(false);
+				return;
 			}
 		}
-		
-		//TODO: update the GeoIP db file if in the resource is newer
 		
 		
 		File readmeFile = new File(dataDir, README_FILENAME);
@@ -215,12 +222,15 @@ public class Plugin extends JavaPlugin
 			{
 				this.getLogger().severe("Error extracting the file \"" + README_FILENAME + "\" to \"" + readmeFile.getAbsolutePath() + "\".");
 				e.printStackTrace();
+				this.setEnabled(false);
+				return; 
+				//the README file is critical because legal reasons (maxmind's license requires to mention their website in the product)
 			}
 		}
 		
 		
-		this.reload();
-
+		this.reload(); //the first time it means 'load' and if fail should not disable the plugin
+		
 		
 		this.getServer().getPluginManager().registerEvents(new Listener(), this);
 		this.getCommand(COMMANDS_BASE).setExecutor(new BaseCommand());
@@ -229,7 +239,9 @@ public class Plugin extends JavaPlugin
 	
 	public void reload()
 	{
-				
+		//means 'load' on first time call 
+		//NOTE: don't disable the plugin here, user can edit the config/message files and use 'reload' command for resolve the problem
+
 		File dataDir = this.getDataFolder();
 		
 		
@@ -240,8 +252,8 @@ public class Plugin extends JavaPlugin
 			this.config = new Config();
 		}
 		
-		try {
-			
+		try 
+		{
 			YamlConfiguration config = new YamlConfiguration();
 			config.load(configFile);
 
@@ -251,8 +263,8 @@ public class Plugin extends JavaPlugin
 			this.config.setMessagesCulture(config.getString("messages-culture"));
 			this.config.setCountrynamesCulture(config.getString("countrynames-culture"));
 			this.config.setDebug(config.getBoolean("debug"));
-			
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			this.getLogger().severe("Error loading the " + configFile.getName() + " file.");
 			e.printStackTrace();
 		}
@@ -263,13 +275,11 @@ public class Plugin extends JavaPlugin
 
 		try (InputStreamReader sr = new InputStreamReader(new FileInputStream(messagesFile), "UTF8")) 
 		{
-
 			YamlConfiguration messages = new YamlConfiguration();
 			messages.load(sr);
 			
 			this.config.setJoinWithCountryMessage(messages.getString("joinWithCountry"));
 			this.config.setJoinWithoutCountryMessage(messages.getString("joinWithoutCountry"));
-			
 		} catch (Exception e) 
 		{
 			this.getLogger().severe("Error loading the " + messagesFile.getName() + " file.");
@@ -304,12 +314,13 @@ public class Plugin extends JavaPlugin
 		
 		if(this.geoipdbreader != null)
 		{
-			try {
+			try 
+			{
 				this.geoipdbreader.close();
 			}
 			catch (IOException e) 
 			{
-				// TODO Auto-generated catch block
+				this.getLogger().severe("Error closing the " + geoipdbFile.getName() + " file.");
 				e.printStackTrace();
 			}
 		}
@@ -343,7 +354,7 @@ public class Plugin extends JavaPlugin
 	
     private final InputStream getResourceAsStream(String name)
     {
-        return getClass().getClassLoader().getResourceAsStream( name );
+        return getClass().getClassLoader().getResourceAsStream(name);
     }
 	
 }
