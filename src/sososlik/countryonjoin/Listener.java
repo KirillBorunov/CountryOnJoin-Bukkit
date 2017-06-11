@@ -51,11 +51,9 @@ public class Listener implements org.bukkit.event.Listener
 	}
 
 	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent event) {
-
-		//TODO: check if cancelled and configured to replace the MC message then exit
-		
-		
+	public void onPlayerJoin(PlayerJoinEvent event) 
+	{
+	
 		InetAddress playerAddress = event.getPlayer().getAddress().getAddress();
 		
 		String playerCountryKey = Plugin.UNKNOWN_COUNTRY_KEY;

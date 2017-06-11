@@ -11,12 +11,6 @@ public class BaseCommand implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) 
     {
-		//TODO: split this to sub-commands classes
-		//TODO: print help and/or available commands
-		//TODO: maybe the messages should come from the messages file?
-		//TODO: display a header or about box
-		//TODO: a command for view/modify the configuration
-		
 		if(args.length == 0)
 		{
 			this.replyError(sender, "You must specify a sub-command!");
