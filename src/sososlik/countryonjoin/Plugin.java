@@ -35,7 +35,7 @@ public class Plugin extends JavaPlugin
 	
 	private static Plugin instance;
 	private DatabaseReader geoipdbreader;
-	private Config config;
+	private sososlik.countryonjoin.Config config;
 	
 	
 	public Plugin()
@@ -249,7 +249,7 @@ public class Plugin extends JavaPlugin
 
 		if(this.config == null)
 		{
-			this.config = new Config();
+			this.config = new sososlik.countryonjoin.Config();
 		}
 		
 		try 
