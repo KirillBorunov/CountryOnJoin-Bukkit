@@ -4,15 +4,16 @@ import java.util.HashMap;
 
 public class Config
 {
-	private boolean replaceDefaultJoinMessage;
-	private boolean broadcastOnUnknownCountry;
-	private boolean broadcastAltJoinMsgOnUnknownCountry;
-	private String joinWithCountryMessage;
-	private String joinWithoutCountryMessage;
+	private boolean replaceDefaultJoinMessage = true;
+	private boolean broadcastOnUnknownCountry = true;
+	private boolean broadcastAltJoinMsgOnUnknownCountry = true;
+	private String joinWithCountryMessage = "&e{0}&r&e joined from &c{1}&r&e";
+	private String joinWithoutCountryMessage = "&e{0}&r&e joined";
 	private HashMap<String, String> countryNames;
-	private String messagesCulture;
-	private String countrynamesCulture;
-	private boolean debug;
+	private String messagesCulture = "en-US";
+	private String countrynamesCulture = "en-US";
+	private boolean enablePlaceholderAPIHook = true;
+	private boolean debug = false;
 
 	public Config()
 	{
@@ -72,6 +73,12 @@ public class Config
 	}
 	public void setCountryNames(HashMap<String, String> countryNames) {
 		this.countryNames = countryNames;
+	}
+	public boolean getEnablePlaceholderAPIHook() {
+		return this.enablePlaceholderAPIHook;
+	}
+	public void setEnablePlaceholderAPIHook(boolean enablePlaceholderAPIHook) {
+		this.enablePlaceholderAPIHook = enablePlaceholderAPIHook;
 	}
 	
 }

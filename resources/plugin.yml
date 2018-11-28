@@ -1,18 +1,27 @@
 name: CountryOnJoin
 main: sososlik.countryonjoin.Plugin
-version: 1.1.1
+version: 1.2.0
 author: "Sososlik (sososlik@outlook.com)"
-description: "Mentions the country from wich the player joins the game."
+description: "Mentions the country from wich the player joins the game. Adds placeholders and a command to get the country information."
 website: https://www.spigotmc.org/resources/country-on-join-bukkit-edition.34275/
 commands:
   countryonjoin:
     description: Base command for the plugin commands.
-    usage: /countryonjoin <sub-command>
+    usage: |
+      /countryonjoin <sub-command>
+      reload: reloads the configuration files and apply the changes
+  country:
+    description: Get country information about a player.
+    permission: countryonjoin.command.country
+    usage: /country <player>
 permissions:
   countryonjoin.hide:
     description: Hide the country for the player.
     default: false
   countryonjoin.command.*:
-    description: Gives access to all the sub-commands.
+    description: Gives access to all sub-commands.
+    default: false
     children:
       countryonjoin.command.reload: true
+      countryonjoin.command.country: true
+softdepend: [PlaceholderAPI]

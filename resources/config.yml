@@ -21,5 +21,9 @@ messages-culture: "en-US"
 # See in the 'countrynames' folder for available cultures in the filenames: countrynames/countrynames.<culture>.yml
 countrynames-culture: "en-US"
 
+# Allow this plugin to use the PlaceholdersAPI for provide some placeholders for use in other plugins.
+# If there is no PlaceholderAPI plugin installed on the server then this setting is ignored. 
+enablePlaceholderAPIHook: true
+
 # Spam the console with useful information for error reporting. Should be disabled on production environment.
 debug: false

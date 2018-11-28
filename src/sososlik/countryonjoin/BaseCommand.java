@@ -5,61 +5,32 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class BaseCommand implements CommandExecutor 
+public abstract class BaseCommand implements CommandExecutor 
 {
+	public static final String ACCESS_DENIED_TEXT = "You don't have permission to use that command!";
+	public static final String TOO_MANY_ARGUMENTS_TEXT = "Too many arguments!";
 	
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) 
-    {
-		if(args.length == 0)
+	protected Plugin plugin;
+	
+    public BaseCommand(Plugin plugin) {
+		this.plugin = plugin;
+	}
+	
+	protected boolean checkAccess(CommandSender sender, String commandName) {
+		if(!sender.hasPermission(Plugin.PERMISSIONS_BASE + ".command." + commandName))
 		{
-			this.replyError(sender, "You must specify a sub-command!");
+			this.replyError(sender, ACCESS_DENIED_TEXT);
 			return false;
 		}
-		else
-		{
-			switch(args[0].toLowerCase())
-			{
-			case "reload":
-				
-				if(sender.hasPermission(Plugin.PERMISSIONS_BASE + ".command.reload"))
-				{
-					if(args.length > 1)
-					{
-						this.replyError(sender, "Too many arguments!");
-						return false;
-					}
-									
-					this.replyInfo(sender, "Reloading the configuration...");
-					
-					Plugin.getInstance().reload();
-					Listener.getInstance().reload();
-					
-					this.replyInfo(sender, "Configuration reloaded.");
-					
-				}
-				else
-				{
-					this.replyError(sender, "You don't have permission to use that command!");
-				}
-				
-				break;
-			default:
-				this.replyError(sender, "Unknown sub-command!");
-				return false;
-			}
-		}
-		
 		return true;
-    	
-    }
+	}
 	
-	private void replyError(CommandSender sender, String text)
+	protected void replyError(CommandSender sender, String text)
 	{
 		sender.sendMessage(ChatColor.RED + text);
 	}
 	
-	private void replyInfo(CommandSender sender, String text)
+	protected void replyInfo(CommandSender sender, String text)
 	{
 		sender.sendMessage(text);
 	}

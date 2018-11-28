@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>CountryOnJoin-Bukkit</groupId>
   <artifactId>CountryOnJoin-Bukkit</artifactId>
-  <version>1.1.1</version>
+  <version>1.2.0</version>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <resources>
@@ -39,14 +39,24 @@
             </goals>
             <configuration>
               <minimizeJar>true</minimizeJar>
-              <filter>
-                <artifact>*:*</artifact>
-                <excludes>
-                  <exclude>META-INF/*.SF</exclude>
-                  <exclude>META-INF/*.DSA</exclude>
-                  <exclude>META-INF/*.RSA</exclude>
-                </excludes>
-              </filter>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                    <exclude>META-INF/*.txt</exclude>
+                    <exclude>META-INF/maven/</exclude>
+                    <exclude>META-INF/services/</exclude>
+                    <exclude>META-INF/DEPENDENCIES</exclude>
+                    <exclude>META-INF/LICENSE</exclude>
+                    <exclude>META-INF/NOTICE</exclude>
+                    <exclude>org/</exclude>
+                    <exclude>mozilla/</exclude>
+                  </excludes>
+                </filter>
+              </filters>
             </configuration>
           </execution>
         </executions>
@@ -57,6 +67,10 @@
     <repository>
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
+      <id>placeholderapi</id>
+      <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
     </repository>
   </repositories>
   <dependencies>
@@ -91,6 +105,12 @@
           <groupId>org.yaml</groupId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>me.clip</groupId>
+      <artifactId>placeholderapi</artifactId>
+      <version>2.9.2</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>
