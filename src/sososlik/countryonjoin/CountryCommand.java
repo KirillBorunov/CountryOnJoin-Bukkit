@@ -30,6 +30,8 @@ public class CountryCommand extends BaseCommand {
 			return false;
 		}
 		
+		// We need this deprecated method because this command works with the player name
+		@SuppressWarnings("deprecation")
 		Player player = this.plugin.getServer().getPlayer(args[0]);
 		
 		if(player == null) {

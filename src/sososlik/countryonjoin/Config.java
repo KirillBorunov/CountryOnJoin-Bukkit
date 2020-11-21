@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 public class Config
 {
+	//NOTE: ensure these defaults are synced with the hardcoded config.yml resource
+	//TODO: we need to generate the config.yml from this class (how to add the comments?)
 	private boolean replaceDefaultJoinMessage = true;
 	private boolean broadcastOnUnknownCountry = true;
 	private boolean broadcastAltJoinMsgOnUnknownCountry = true;
@@ -14,6 +16,7 @@ public class Config
 	private String countrynamesCulture = "en-US";
 	private boolean enablePlaceholderAPIHook = true;
 	private boolean debug = false;
+	private String geoIPDB = "GeoLite2-Country.mmdb";
 
 	public Config()
 	{
@@ -79,6 +82,12 @@ public class Config
 	}
 	public void setEnablePlaceholderAPIHook(boolean enablePlaceholderAPIHook) {
 		this.enablePlaceholderAPIHook = enablePlaceholderAPIHook;
+	}
+	public String getGeoIPDB() {
+		return geoIPDB;
+	}
+	public void setGeoIPDB(String geoIPDB) {
+		this.geoIPDB = geoIPDB;
 	}
 	
 }

@@ -25,5 +25,9 @@ countrynames-culture: "en-US"
 # If there is no PlaceholderAPI plugin installed on the server then this setting is ignored. 
 enablePlaceholderAPIHook: true
 
+# The GeoIP database file name to load.
+# Use this to load a different database than the provided by the plugin. For example, if you update the database manually.
+geoIPDB: "GeoLite2-Country.mmdb"
+
 # Spam the console with useful information for error reporting. Should be disabled on production environment.
 debug: false

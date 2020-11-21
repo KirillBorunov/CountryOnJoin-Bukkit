@@ -37,6 +37,7 @@ public class GeoIP implements AutoCloseable {
 		this.geoipdbreader.close();
 	}
 	
+	@SuppressWarnings("serial")
 	public class NotFoundException extends Exception {
 
 	    public NotFoundException(String message) {

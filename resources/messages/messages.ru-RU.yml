@@ -1,3 +1,6 @@
+# NOTE: Do not modify this file! Your changes will be lost!
+# If you need to customize the contents, please create a new file with a custom name and configure the plugin to use your file (see config.yml).
+
 # Within a message, a pair of single quotes can be used to quote any arbitrary characters except single quotes.
 # For example, "'{0}'" represents the literal text "{0}", and will not be replaced.
 # A single quote itself must be represented by doubled single quotes ''.
